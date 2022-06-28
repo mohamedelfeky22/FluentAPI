@@ -1,21 +1,24 @@
 ﻿using System.Data.Entity;
-namespace FluentAPI.Entities
+
+namespace DAL.Entities
 {
-    public class MyContext:DbContext
+    public class MyContext : DbContext
     {
         //DbModelBuilder is used to map CLR classes to a database schema.
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //Configure default schema
-           // The default schema is dbo when the database is generated.
+            // The default schema is dbo when the database is generated.
             modelBuilder.HasDefaultSchema("Admin");
 
-           
+
             //Entity Splitting (Map Entity to Multiple Table)
-            modelBuilder.Entity<Student>().Map(sd => {
+            modelBuilder.Entity<Student>().Map(sd =>
+            {
                 sd.Properties(p => new { p.ID, p.FirstMidName, p.LastName });
                 sd.ToTable("StudentData");
-            }).Map(si => {
+            }).Map(si =>
+            {
                 si.Properties(p => new { p.ID, p.EnrollmentDate });
                 si.ToTable("StudentEnrollmentInfo");
             });
@@ -50,12 +53,12 @@ namespace FluentAPI.Entities
             modelBuilder.Entity<Enrollment>()
 
             .HasRequired<Student>(s => s.Student)
-            .WithMany(t=> t.Enrollments)
+            .WithMany(t => t.Enrollments)
             .HasForeignKey(u => u.StudentID);
 
             modelBuilder.Entity<Enrollment>()
 
-            .HasRequired<Course>(C=> C.Course)
+            .HasRequired<Course>(C => C.Course)
             .WithMany(t => t.Enrollments)
             .HasForeignKey(u => u.CourseID);
 
@@ -73,7 +76,8 @@ namespace FluentAPI.Entities
             .HasMany(s => s.Courses)
              .WithMany(s => s.Students)
 
-            .Map(m=> {
+            .Map(m =>
+            {
                 m.ToTable("StudentCoursesTable");
                 m.MapLeftKey("StudentID");
                 m.MapRightKey("CourseID");
@@ -82,8 +86,8 @@ namespace FluentAPI.Entities
             // Configure ID as FK for StudentLogIn
             modelBuilder.Entity<Student>()
 
-            .HasOptional(s=> s.StudentLogIn) //StudentLogIn is optional
-            .WithRequired(t=> t.Student); // Create inverse relationship
+            .HasOptional(s => s.StudentLogIn) //StudentLogIn is optional
+            .WithRequired(t => t.Student); // Create inverse relationship
 
         }
 

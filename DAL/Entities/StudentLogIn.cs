@@ -1,4 +1,4 @@
-﻿namespace FluentAPI.Entities
+﻿namespace DAL.Entities
 {
     public class StudentLogIn
     {

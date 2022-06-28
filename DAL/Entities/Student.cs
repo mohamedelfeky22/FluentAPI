@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FluentAPI.Entities
+namespace DAL.Entities
 {
     public class Student
     {
