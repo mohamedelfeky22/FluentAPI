@@ -12,7 +12,7 @@ namespace DAL.Entities
             modelBuilder.HasDefaultSchema("Admin");
 
 
-            //Entity Splitting (Map Entity to Multiple Table)
+            //Map Entity to Multiple Table
             modelBuilder.Entity<Student>().Map(sd =>
             {
                 sd.Properties(p => new { p.ID, p.FirstMidName, p.LastName });
